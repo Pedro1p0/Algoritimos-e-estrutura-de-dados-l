@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+int aux;
+
+
+void insertionSortIP(int* v, int tamanho){
+    
+    for(int i = 0; i < tamanho-1; i++){
+        for(int j=1; j< tamanho; j++){
+            if(v[j-1] > v[j]){
+                aux = v[j];
+                v[j] = v[j-1];
+                v[j-1] = aux;
+            }
+        }        
+    }
+}
+
+int  main(){ 
+  int tam = 5;
+  int v[] = {5, 3, 2, 6, 1};
+  
+  for(int i = 0; i < tam;i++){
+      printf("%d ",v[i]);
+  }
+  printf("\n");
+  insertionSortIP(v,tam);
+  
+  
+  for (int i = 0; i < tam;i++){
+    printf("%d ",v[i]);
+  }
+}
