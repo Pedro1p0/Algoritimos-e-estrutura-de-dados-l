@@ -1,0 +1,92 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+// nossa função de que vai unir os vetores 
+
+void merge(int v[],int e, int m, int d){
+    // criando indices pra se guiar a posição do valor atual dos vetores 
+    int i,j,k;
+    int tam_v1 = m - e + 1 ;
+    int tam_v2 = d - m ;
+    
+    // vetor E = esquerda , vetor D = direita 
+    
+    int E[tam_v1], D[tam_v2];
+    
+    
+    //copiar o vetor principal para os vetores da esquerda e direita 
+    for(int i = 0; i < tam_v1; i++ ){
+        E[i] = v[e + 1];
+    }
+    for (int j = 0;i < tam_v2; j++){
+        D[i] = v[m + 1 + j];
+    }
+    
+    
+    
+    i = 0 ;
+    j = 0 ;
+    k = e;
+    
+    // unir os 2 vetores verificando qual é o menor entre os atuais indices 
+    
+    while(i < tam_v1 && j < tam_v2){
+        if(E[i] <= D[j]){
+            
+            v[k] = E[i];
+            i++;
+        }
+        else{
+            v[k] = D[j];
+            j++;
+        }
+        k++;
+    }
+    
+    // copior o que sobra do vetor 
+    
+    while(i < tam_v1){
+        v[k] = E[i];
+        i++;
+        k++;
+    }
+        while(j < tam_v2){
+        v[k] = D[j];
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(int v[],int e,int d){
+    if(e < d){
+        
+        int m =e + (d-e)/2;
+        
+        mergeSort(v ,e, m);
+        mergeSort(v, m+1, d);
+        merge(v,e,m,d);
+    }
+}
+    
+
+
+
+
+
+
+int main()
+{
+    
+    int v[] = {3, 6, 2, 5, 4, 3, 7, 1, pow(10,9)};
+    
+    // descobrir o tamanho do vetor 
+    int v_size = sizeof(v) / sizeof(v[0]);
+    for(int i = 0; i < v_size; i++){
+        printf("%d",v[i]);
+    }
+    mergeSort(v, 0, v_size-1 );
+    
+    
+    printf("%d",v[0]);
+    return 0;
+}
