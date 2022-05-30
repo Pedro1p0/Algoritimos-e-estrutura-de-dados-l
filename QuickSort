@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+
+
+// ----------------------------------------------------------------------------------
+
+//função para trocar de posição
+void troca(int* v, int i, int j){
+    int temp = v[i];
+    v[i] = v[j];
+    v[j] = temp;
+}
+
+// retorna a posição do pivo
+
+int particiona(int* v, int ini, int fim){
+    int pIndex = ini;
+    int pivo = v[fim];
+    int i = ini-1;
+    
+    
+    for(int i = ini; i < fim-1; i++){
+        if(v[i] <= pivo){
+            troca(v,i,pIndex);
+            pIndex++;
+        }
+    }
+    troca(v,pIndex,fim);
+    return pIndex;
+}
+
+int partitiona_r(int* v, int ini, int fim){
+    srand(time(NULL)); 
+    int random = ini + rand() % (fim - ini);
+    int aux;
+    aux = v[fim];
+    v[fim] = random;
+    aux = v[random];
+    return particiona(v, ini, fim);
+}
+
+void quicksort(int* v, int inicio, int fim){
+    int pivo;
+    if(fim > inicio){
+        pivo = partitiona_r(v, inicio, fim);
+        quicksort(v, inicio, pivo-1);
+        quicksort(v, pivo+1, fim);
+    }
+}
+
+/*
+{1,2,3,3,4,5,6,7}
+
+*/
+
+int main(){
+    
+    
+    int v[] = {1,2,3,3,4,5,6,7};
+    int v_size = sizeof(v)/sizeof(v[0]);
+    for(int i = 0;i<v_size;i++){
+        printf("%d ", v[i]);
+    }
+    
+    printf("\n");
+    
+    quicksort(v,0,v_size);
+    for(int i = 0;i<v_size;i++){
+        printf("%d ", v[i]);
+    }
+    return 0;
+}
